@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Zabezpečení
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+
+    <ion-item>
+      <ion-checkbox slot="start" [(ngModel)]="wpaVal"></ion-checkbox>
+      <ion-label>WPA</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">WPA heslo</ion-label>
+      <ion-input type="new-password" minlength="8" [(ngModel)]="wpahVal" [disabled]=!wpaVal></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="start" [(ngModel)]="wpa2Val"></ion-checkbox>
+      <ion-label>WPA2</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">WPA2 heslo</ion-label>
+      <ion-input type="new-password" minlength="8" [(ngModel)]="wpa2hVal" [disabled]=!wpa2Val></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Šifrování</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="start" [(ngModel)]="aesVal"></ion-checkbox>
+      <ion-label>AES</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="start" [(ngModel)]="tkipVal"></ion-checkbox>
+      <ion-label>TKIP</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="save()">Uložit</ion-button>
+</ion-content>

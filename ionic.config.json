@@ -1,0 +1,7 @@
+{
+  "name": "routerman",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

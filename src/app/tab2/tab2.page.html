@@ -1,0 +1,73 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Wi-Fi Nastavení
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label>Wi-Fi 2.4 GHz</ion-label>
+      <ion-toggle slot="end" [checked]="true" [(ngModel)]="enVal" [enableOnOffLabels]="true"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-select interface="popover" placeholder="Mód" [(ngModel)]="mod">
+        <ion-select-option value="2GHz-B">2GHz-B</ion-select-option>
+        <ion-select-option value="2GHz-B/G">2GHz-B/G</ion-select-option>
+        <ion-select-option value="2GHz-B/G/N">2GHz-B/G/N</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select interface="popover" placeholder="Kanál" [(ngModel)]="channel">
+        <ion-select-option value="auto">Auto</ion-select-option>
+        <ion-select-option value="2412">Kanál 1</ion-select-option>
+        <ion-select-option value="2417">Kanál 2</ion-select-option>
+        <ion-select-option value="2422">Kanál 3</ion-select-option>
+        <ion-select-option value="2427">Kanál 4</ion-select-option>
+        <ion-select-option value="2432">Kanál 5</ion-select-option>
+        <ion-select-option value="2437">Kanál 6</ion-select-option>
+        <ion-select-option value="2442">Kanál 7</ion-select-option>
+        <ion-select-option value="2447">Kanál 8</ion-select-option>
+        <ion-select-option value="2452">Kanál 9</ion-select-option>
+        <ion-select-option value="2457">Kanál 10</ion-select-option>
+        <ion-select-option value="2462">Kanál 11</ion-select-option>
+        <ion-select-option value="2467">Kanál 12</ion-select-option>
+        <ion-select-option value="2472">Kanál 13</ion-select-option>
+      </ion-select>
+    </ion-item>
+<ion-item>
+  <ion-label>Šířka kanálu</ion-label>
+</ion-item>
+    <ion-item>
+      
+      <ion-segment value="20MHz" [(ngModel)]="channelwidth">
+        <ion-segment-button value="20MHz">
+          <ion-label>20 MHz</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="20/40MHz Ce">
+          <ion-label>40 MHz</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">SSID</ion-label>
+      <ion-input type="text" [(ngModel)]="ssidVal"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="start" [(ngModel)]="hideSSIDVal"></ion-checkbox>
+      <ion-label>Skrýt SSID</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-select interface="popover" placeholder="Země" [(ngModel)]="country">
+        <ion-select-option value="czech republic">Česká republika</ion-select-option>
+        <ion-select-option value="slovakia">Slovenská republika</ion-select-option>
+        <ion-select-option value="hungary">Maďarsko</ion-select-option>
+      </ion-select>
+    </ion-item>    
+  </ion-list>
+  <ion-button expand="block" (click)="save()">Uložit</ion-button>
+  
+</ion-content>
