@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ToastController } from '@ionic/angular';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-tab1',
@@ -16,12 +17,25 @@ export class Tab1Page {
   passVal = "";
   handlerMessage = '';
   roleMessage = '';
+  listData = [];
+  txt = "";
 
   constructor(
     private apiService: ApiService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private dataService: DataService
   ) {
-        
+    this.loadData();
+  }
+
+  async loadData(){
+  
+    this.listData = await this.dataService.getData();
+  }
+
+  async removeItem(index: any){
+    this.dataService.removeItem(index);
+    this.listData.splice(index, 1);
   }
 
   async login(){
@@ -30,7 +44,8 @@ export class Tab1Page {
     environment.api.credent = "Basic " + cred;
     let url = "https://" + this.addrVal + "/rest";
     environment.api.baseUrl = url;
-    console.log("Base64: " + environment.api.credent + " url: " + environment.api.baseUrl);
+
+this.apiService.getData();    
 
     // TODO: opravit ověření přihlašovaích údajů
     /*

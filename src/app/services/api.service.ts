@@ -45,7 +45,10 @@ export class ApiService {
       }
       };
       const response: HttpResponse = await Http.get(options);
-      return response.status
+      // TODO: opravit ověření přihlašovaích údajů
+      /*const response: HttpResponse = await Http.get(options);
+      return response.status*/
+    
     }
 
   /**
@@ -77,9 +80,7 @@ export class ApiService {
         url: environment.api.baseUrl + url,
         headers: {
           'Authorization': environment.api.credent,
-          'Content-Type': 'application/json',
-          'Connection': 'Keep-Alive',
-          'X-Frame-Options': 'sameorigin'
+          'Content-Type': 'application/json'
         },
         data: {
           'band': mod,
@@ -91,6 +92,7 @@ export class ApiService {
           'hide-ssid': hideSSID
         }
       };
+      console.log("Posílám")
       Http.patch(options);
     }
 
