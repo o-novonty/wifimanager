@@ -28,62 +28,50 @@ export class Tab1Page {
     this.loadData();
   }
 
-  async loadData(){
-  
+  //Pro práci s úložištěm
+  async loadData() {
     this.listData = await this.dataService.getData();
   }
-
-  async removeItem(index: any){
+  async removeItem(index: any) {
     this.dataService.removeItem(index);
     this.listData.splice(index, 1);
   }
 
-  async login(){
+  //Akce tlačítka přihlášení
+  async login() {
+    //Převedení a uložení přihlašovacích údajů ve formátu Base64 a url
     let userlog = this.unameVal + ":" + this.passVal;
     let cred = btoa(userlog);
     environment.api.credent = "Basic " + cred;
     let url = "https://" + this.addrVal + "/rest";
     environment.api.baseUrl = url;
 
-this.apiService.getData();    
-
-    // TODO: opravit ověření přihlašovaích údajů
-    /*
+    //Volání API
     let stat = this.apiService.getData();
-    if(stat == 200){
-      const toast = await this.toastController.create({
-        message: 'Úspěšné přihlášení!',
-        duration: 3000,
-        buttons: [
-          {
-            text: 'OK',
-            role: 'cancel',
-            handler: () => { this.handlerMessage = 'Dismiss clicked'; }
-          }
-        ]
-      });
-      await toast.present();
-      const { role } = await toast.onDidDismiss();
-      this.roleMessage = `Dismissed with role: ${role}`;
-    }
-    else{
-      const toast = await this.toastController.create({
-        message: 'Neúspěšné přihlášení!',
-        duration: 3000,
-        buttons: [
-          {
-            text: 'OK',
-            role: 'cancel',
-            handler: () => { this.handlerMessage = 'Dismiss clicked'; }
-          }
-        ]
-      });
-      await toast.present();
-      const { role } = await toast.onDidDismiss();
-      this.roleMessage = `Dismissed with role: ${role}`;
-    }
-*/
 
+    //Zobrazení informace o přihlášení
+    let zprava = "Chyba při komunikaci s routerem.";
+    if (await stat == 200) {
+      zprava = "Přihlášení proběhlo úspěšně!";
+    }
+    if (await stat == 401) {
+      zprava = "Nesprávné přihlašovací údaje!";
+    }
+
+    const toast = await this.toastController.create({
+      message: zprava,
+      duration: 3000,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => { this.handlerMessage = 'Dismiss clicked'; }
+        }
+      ]
+    });
+    await toast.present();
+    const { role } = await toast.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`;
   }
 
 }

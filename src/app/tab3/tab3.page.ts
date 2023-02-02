@@ -12,14 +12,8 @@ export class Tab3Page {
   handlerMessage = '';
   roleMessage = '';
   listData = [];
+
   txt = "";
-
-  constructor(
-    private apiService: ApiService,
-    private toastController: ToastController,
-    private dataService: DataService
-  ) { this.loadData();}
-
   wpahVal = "";
   wpa2hVal = "";
   wpaVal = true;
@@ -27,24 +21,49 @@ export class Tab3Page {
   aesVal = true;
   tkipVal = false;
 
-  async loadData(){
-  
+  constructor(
+    private apiService: ApiService,
+    private toastController: ToastController,
+    private dataService: DataService
+  ) { this.loadData(); }
+
+
+  //Pro práci s úložištěm
+  async loadData() {
     this.listData = await this.dataService.getData();
   }
-  
-  async addData(){
+  async addData() {
     await this.dataService.addData(this.txt);
     this.loadData();
   }
 
+  //Akce tlačítka uložení
   async save() {
-    // Volat servisku
-    this.apiService.setSettings(this.wpahVal, this.wpa2hVal, this.wpaVal, this.wpa2Val, this.aesVal, this.tkipVal);
+    //Odeslání dat API
+    let stat = this.apiService.setSettings(this.wpahVal, this.wpa2hVal, this.wpaVal, this.wpa2Val, this.aesVal, this.tkipVal);
+
+    //Zobrazení informace o stavu uložení - pro WLAN (mobilní telefon)
+    let zprava = "Nastavení dokončeno!";
     this.txt = "WPA2: " + this.wpa2hVal;
     this.addData();
 
+    //Zobrazení informace o stavu uložení - pro LAN
+    /*
+    let zprava = "Chyba při komunikaci s routerem!";
+    if (await stat == 200) {
+      zprava = "Nastavení dokončeno!";
+
+      // Uložení hesla Wi-Fi do paměti
+      this.txt = "WPA2: " + this.wpa2hVal;
+      this.addData();
+    }
+    if (await stat == 401) {
+      zprava = "Nesprávné přihlašovací údaje!";
+    }
+    */
+
     const toast = await this.toastController.create({
-      message: 'Nastavení dokončeno!',
+      message: zprava,
       duration: 3000,
       buttons: [
         {
@@ -54,10 +73,8 @@ export class Tab3Page {
         }
       ]
     });
-
     await toast.present();
-
     const { role } = await toast.onDidDismiss();
     this.roleMessage = `Dismissed with role: ${role}`;
   }
-  }
+}
